@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31727.386
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirbnbManager", "AirbnbManager.csproj", "{A23F2A02-0BAD-4742-AA0C-6EA7F0BACAC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseModel", "..\DatabaseModel\DatabaseModel.csproj", "{60F1E363-E6A5-48AB-A3F1-921BA33229A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A23F2A02-0BAD-4742-AA0C-6EA7F0BACAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A23F2A02-0BAD-4742-AA0C-6EA7F0BACAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A23F2A02-0BAD-4742-AA0C-6EA7F0BACAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A23F2A02-0BAD-4742-AA0C-6EA7F0BACAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60F1E363-E6A5-48AB-A3F1-921BA33229A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60F1E363-E6A5-48AB-A3F1-921BA33229A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60F1E363-E6A5-48AB-A3F1-921BA33229A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60F1E363-E6A5-48AB-A3F1-921BA33229A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9610F87-F491-41E6-9B7F-2C86A77FAD60}
+	EndGlobalSection
+EndGlobal

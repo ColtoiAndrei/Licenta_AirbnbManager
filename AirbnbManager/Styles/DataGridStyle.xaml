@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <Style TargetType="DataGrid" x:Key="DataGridStyle">
+        <Setter Property="EnableRowVirtualization" Value="False"/>
+        <Setter Property="Margin" Value="10,10,10,356.6"/>
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
+        <Setter Property="Background" Value="#222035"/>
+        <Setter Property="BorderBrush" Value="#222035"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#222035"/>
+        <Setter Property="VerticalGridLinesBrush" Value="#222035"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="RowBackground" Value="#222035"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="EnableRowVirtualization" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+
+        
+    </Style>
+    <Style TargetType="DataGridCell" x:Key="CellStyle">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Green"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="Green"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader" x:Key="ColumnHeaderStyle">
+
+        <Setter Property="Background" Value="#222035" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="BorderBrush" Value="#222035" />
+        <Setter Property="SeparatorBrush" Value="#222035" />
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="IsManipulationEnabled" Value="False"/>
+    </Style>
+    
+</ResourceDictionary>

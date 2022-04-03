@@ -1,0 +1,55 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirbnbManager"
+             xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.CleaningPage"
+             mc:Ignorable="d" 
+              d:DesignHeight="600" d:DesignWidth="720"  Background="#2E3349" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="cleaningViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Cleaning}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource cleaningViewSource}">
+
+        <DataGrid x:Name="cleaningDataGrid" 
+                  Style="{StaticResource DataGridStyle}"
+                  ItemsSource="{Binding}"
+                  ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
+                  CellStyle="{StaticResource CellStyle}"
+                  ColumnWidth="*">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="companyIdColumn" Binding="{Binding CompanyId}" Header="Company Id" />
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email"/>
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="grid3" HorizontalAlignment="Left"  Margin="83,337,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Foreground="White" Content="Company Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="companyIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding CompanyId, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="emailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Email, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Price:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Price, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddCleaning" Content="Add Company" HorizontalAlignment="Left" Margin="469,337,0,0" VerticalAlignment="Top" Width="99" Click="btnAddCleaning_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditCleaning" Content="Edit Company" HorizontalAlignment="Left" Margin="469,381,0,0" VerticalAlignment="Top" Width="99" Click="btnEditCleaning_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteCleaning" Content="Delete Company" HorizontalAlignment="Left" Margin="469,431,0,0" VerticalAlignment="Top" Width="99" Click="btnDeleteCleaning_Click"/>
+
+    </Grid>
+</UserControl>

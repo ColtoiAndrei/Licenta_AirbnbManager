@@ -1,0 +1,87 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirbnbManager"
+             xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.PropertiesPage"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="720" Background="#2E3349" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged" >
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Property}, CreateList=True}"/>
+        <CollectionViewSource x:Key="cleaningViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Cleaning}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource propertyViewSource}">
+
+        <DataGrid x:Name="propertyDataGrid"
+                  Style="{StaticResource DataGridStyle}"
+                  ItemsSource="{Binding}"
+                  ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
+                  CellStyle="{StaticResource CellStyle}"
+                  ColumnWidth="*"
+                  >
+
+
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="propertyCodeColumn" Binding="{Binding PropertyCode}" Header="Property Code" />
+                <DataGridTextColumn x:Name="addressColumn" Binding="{Binding Address}" Header="Address" Width="2*" />
+                <DataGridTextColumn x:Name="roomsColumn" Binding="{Binding Rooms}" Header="Rooms" />
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid  x:Name="grid1" HorizontalAlignment="Left" Margin="49,247,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Foreground="White" Content="Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="addressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Address, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Price:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick"  x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Price, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label  Foreground="White" Content="Property Code:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontFamily="Times New Roman"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="propertyCodeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding PropertyCode, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Rooms:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="roomsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Rooms, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddProperty" Content="Add Property" HorizontalAlignment="Left" Margin="166,382,0,0" VerticalAlignment="Top" Width="99" Click="btnAddProperty_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditProperty" Content="Edit Property" HorizontalAlignment="Left" Margin="166,422,0,0" VerticalAlignment="Top" Width="99" Click="btnEditProperty_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteProperty" Content="Delete Property" HorizontalAlignment="Left" Margin="166,462,0,0" VerticalAlignment="Top" Width="99" Click="btnDeleteProperty_Click"/>
+        <ListBox x:Name="cleaningListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource cleaningViewSource}}" Margin="384,314,229,103" SelectedValuePath="CompanyId"
+                 Background="#222035" 
+                 Foreground="White"/>
+        <Label Foreground="White" Content="Cleaning Date" HorizontalAlignment="Left" Margin="523,319,0,0" VerticalAlignment="Top" Width="83"/>
+        <DatePicker x:Name="cleaningDate" HorizontalAlignment="Left" Margin="523,350,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"
+                    BorderBrush="Transparent"
+                    Foreground="White"
+                    >
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type DatePickerTextBox}" >
+                    <Setter Property="Background" Value="#222035" />
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="Text" Value="Select Date"/>
+                    <Setter Property="Width" Value="65"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="46" Margin="384,248,0,0" VerticalAlignment="Top" Width="268">
+            <Label Foreground="White" Content="Cleaning Services" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" FontFamily="Tempus Sans ITC" FontSize="24"/>
+            <Image Source="/icons/icon3.png" Margin="0,0,0,4.4" />
+        </StackPanel>
+        <Label Content="Price to pay" HorizontalAlignment="Left" Margin="523,413,0,0" VerticalAlignment="Top" Width="75"
+               Foreground="White"/>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="523,444,0,0" TextWrapping="Wrap" Text="Enter Price" VerticalAlignment="Top" Width="65"
+                 Foreground="White"
+                 Background="#222035"/>
+        <Label Content="RON" HorizontalAlignment="Left" Margin="584,440,0,0" VerticalAlignment="Top" Width="36"
+               Foreground="White" Height="27"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="546,497,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
+
+    </Grid>
+</UserControl>

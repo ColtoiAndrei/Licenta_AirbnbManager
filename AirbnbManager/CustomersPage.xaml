@@ -1,0 +1,101 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirbnbManager"
+             xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.CustomersPage"
+             mc:Ignorable="d" 
+              d:DesignHeight="600" d:DesignWidth="720"  Background="#2E3349" Loaded="UserControl_Loaded"  IsVisibleChanged="UserControl_IsVisibleChanged" >
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="customerViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Customer}, CreateList=True}"/>
+        <CollectionViewSource x:Key="propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Property}, CreateList=True}"/>
+        <CollectionViewSource x:Key="bookingViewSource"  d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Booking}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource customerViewSource}">
+
+        <DataGrid x:Name="customerDataGrid" 
+                  Style="{StaticResource DataGridStyle}"
+                  ItemsSource="{Binding}"
+                  ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
+                  CellStyle="{StaticResource CellStyle}"
+                  ColumnWidth="*">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="customerIdColumn" Binding="{Binding CustomerId}" Header="Customer Id" />
+                <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding FirstName}" Header="First Name" Width="1.5*" />
+                <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="1.5*" />
+                <DataGridTextColumn x:Name="ageColumn" Binding="{Binding Age}" Header="Age" />
+                <DataGridTextColumn x:Name="cNPColumn" Binding="{Binding CNP}" Header="CNP" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="21,250,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Foreground="White" Content="Age:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="ageTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Age, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="CNP:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="cNPTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding CNP, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Customer Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="customerIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding CustomerId, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="First Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="firstNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding FirstName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Last Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="lastNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LastName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Margin="132,416,0,0" VerticalAlignment="Top" Width="99" Click="btnAddCustomer_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditCustomer" Content="Edit Customer" HorizontalAlignment="Left" Margin="132,456,0,0" VerticalAlignment="Top" Width="99" Click="btnEditCustomer_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteCustomer" Content="Delete Customer" HorizontalAlignment="Left" Margin="132,496,0,0" VerticalAlignment="Top" Width="99" Click="btnDeleteCustomer_Click"/>
+        <ListBox x:Name="propertyListBox" DisplayMemberPath="PropertyCode" ItemsSource="{Binding Source={StaticResource propertyViewSource}}" Margin="338,301,266,92" SelectedValuePath="PropertyCode" LostFocus="propertyListBox_LostFocus"
+                 Background="#222035" 
+                 Foreground="White"/>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="46" Margin="383,250,0,0" VerticalAlignment="Top" Width="268">
+            <Label Foreground="White" Content="Book Now" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" FontFamily="Tempus Sans ITC" FontSize="24"/>
+            <Image Source="/icons/icon2.png" />
+        </StackPanel>
+        <Label Foreground="White" Content="Check-in" HorizontalAlignment="Left" Margin="489,301,0,0" VerticalAlignment="Top" Width="83"/>
+        <DatePicker x:Name="checkIn" HorizontalAlignment="Left" Margin="489,327,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"
+                    BorderBrush="Transparent"
+                    Foreground="White"
+                    >
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type DatePickerTextBox}" >
+                    <Setter Property="Background" Value="#222035" />
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="Text" Value="Select Check-In"/>
+                    <Setter Property="Width" Value="95"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+
+        <Label Foreground="White" Content="Check-out" HorizontalAlignment="Left" Margin="489,384,0,0" VerticalAlignment="Top" Width="83"/>
+        <DatePicker x:Name="checkOut" HorizontalAlignment="Left" Margin="489,410,0,0" VerticalAlignment="Top"
+                    BorderBrush="Transparent"
+                    Foreground="White" FirstDayOfWeek="Monday"
+                    >
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type DatePickerTextBox}" >
+                    <Setter Property="Background" Value="#222035" />
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="Text" Value="Select Check-Out"/>
+                    <Setter Property="Width" Value="95"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Button Style="{StaticResource ButtonStyle}" FontSize="24" x:Name="btnBook" Content="Save" HorizontalAlignment="Left" Margin="489,466,0,0" VerticalAlignment="Top" Width="102" Click="btnBook_Click" FontFamily="Castellar"/>
+
+
+
+
+    </Grid>
+</UserControl>
+
+
