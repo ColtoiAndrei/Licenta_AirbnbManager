@@ -83,7 +83,6 @@
                 <local:CleaningPage x:Name="cleaning" Visibility="Collapsed"> </local:CleaningPage>
                 <local:BookingsPage x:Name="bookings" Visibility="Collapsed"> </local:BookingsPage>
                 <local:PaymentHistoryPage x:Name="paymentHistory" Visibility="Collapsed"> </local:PaymentHistoryPage>
-                <local:StripePayment x:Name="stripe" Visibility="Collapsed"> </local:StripePayment>
             </Grid>
 
 

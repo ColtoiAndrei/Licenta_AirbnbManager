@@ -62,7 +62,8 @@ namespace AirbnbManager
                         CompanyId = Int32.Parse(companyIdTextBox.Text.Trim()),
                         Name = nameTextBox.Text.Trim(),
                         Email = emailTextBox.Text.Trim(),
-                        Price = Decimal.Parse(priceTextBox.Text.Trim())
+                        Price = Decimal.Parse(priceTextBox.Text.Trim()),
+                        StripeKey = stripeKeyTextBox.Text.Trim()
                     };
 
                     ctx.Cleanings.Add(cleaning);
@@ -92,6 +93,7 @@ namespace AirbnbManager
                         cleaning.Name = nameTextBox.Text.Trim();
                         cleaning.Email = emailTextBox.Text.Trim();
                         cleaning.Price = Decimal.Parse(priceTextBox.Text.Trim());
+                        cleaning.StripeKey = stripeKeyTextBox.Text.Trim();
 
                         ctx.SaveChanges();
                         cleaningVSource.View.Refresh();

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AirbnbManager"
              xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.PaymentHistoryPage"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#2E3349" Loaded="UserControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#2E3349" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <CollectionViewSource x:Key="paymentHistoryViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:PaymentHistory}, CreateList=True}"/>
     </UserControl.Resources>
@@ -16,11 +16,10 @@
                   ItemsSource="{Binding}" 
                   ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
                   CellStyle="{StaticResource CellStyle}"
-                  ColumnWidth="*"
+                  ColumnWidth="*" Margin="10,10,10,279.6"
                   
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="paymentIdColumn" Binding="{Binding PaymentId}" Header="Payment Id" />
                 <DataGridTextColumn x:Name="companyIdColumn" Binding="{Binding CompanyId}" Header="Company Id" />
                 <DataGridTextColumn x:Name="propertyCodeColumn" Binding="{Binding PropertyCode}" Header="Property Code" />
                 <DataGridTemplateColumn x:Name="cleaningDateColumn" Header="Cleaning Date" >
@@ -40,5 +39,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button x:Name="btnDeletePayment" Style="{StaticResource ButtonStyle}" Content="Delete Booking" HorizontalAlignment="Left" Margin="338,260,0,0" VerticalAlignment="Top" Width="130" Click="btnDeletePayment_Click"/>
     </Grid>
 </UserControl>

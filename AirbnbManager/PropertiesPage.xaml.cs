@@ -15,7 +15,8 @@ using System.Windows.Shapes;
 using DatabaseModel;
 using System.Data.Entity;
 using System.Data;
-
+using Stripe;
+using Stripe.Infrastructure;
 
 namespace AirbnbManager
 {
@@ -27,6 +28,7 @@ namespace AirbnbManager
         DatabaseEntitiesModel ctx = new DatabaseEntitiesModel();
         CollectionViewSource propertyVSource;
         CollectionViewSource cleaningVSource;
+        CollectionViewSource paymentHistoryVSource;
 
 
 
@@ -45,6 +47,12 @@ namespace AirbnbManager
             cleaningVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cleaningViewSource")));
             cleaningVSource.Source = ctx.Cleanings.Local;
             ctx.Cleanings.Load();
+            paymentHistoryVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("paymentHistoryViewSource")));
+            paymentHistoryVSource.Source = ctx.PaymentHistories.Local;
+            ctx.PaymentHistories.Load();
+            paymentGrid.Visibility = Visibility.Collapsed;
+
+            
 
             // Do not load your data at design time.
             // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -137,12 +145,211 @@ namespace AirbnbManager
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            DatabaseEntitiesModel ctx = new DatabaseEntitiesModel();
+            cleaningVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cleaningViewSource")));
+            cleaningVSource.Source = ctx.Cleanings.Local;
             ctx.Cleanings.Load();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnPayServices_Click(object sender, RoutedEventArgs e)
         {
+            if (propertyDataGrid.SelectedCells.Count > 0)
+            {
+                if (cleaningListBox.SelectedIndex >= 0)
+                {
+                    if (cleaningDate.SelectedDate.HasValue)
+                    {
+                        paymentGrid.Visibility = Visibility.Visible;
+                        priceToPay.Text = String.Format("{0} RON", ((Cleaning)cleaningListBox.SelectedItem).Price);
+                    }
+                    else MessageBox.Show("Please select a Cleaning Date.");
+                }
+                else MessageBox.Show("Please select a Cleaning Company from the list.");
+            }
+            else MessageBox.Show("Please select a Property from the table.");
+
+
+        }
+
+        private void btnCancelPayment_Click(object sender, RoutedEventArgs e)
+        { 
+            paymentGrid.Visibility = Visibility.Collapsed;
+            cifreCard1.Text = "0000";
+            cifreCard2.Text = "0000";
+            cifreCard3.Text = "0000";
+            cifreCard4.Text = "0000";
+        }
+
+        private void cifreCard1_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard1.Text.Length!=4)
+            {
+                cifreCard1.Text = "0000";
+            }
+        }
+
+        private void cifreCard1_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(cifreCard1.Text=="0000")
+            {
+                cifreCard1.Text = "";
+            }
+        }
+
+        private void cifreCard2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard2.Text.Length != 4)
+            {
+                cifreCard2.Text = "0000";
+            }
+        }
+
+        private void cifreCard2_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard2.Text == "0000")
+            {
+                cifreCard2.Text = "";
+            }
+        }
+
+        private void cifreCard3_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard3.Text.Length != 4)
+            {
+                cifreCard3.Text = "0000";
+            }
+        }
+
+        private void cifreCard3_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard3.Text == "0000")
+            {
+                cifreCard3.Text = "";
+            }
+        }
+
+        private void cifreCard4_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard4.Text.Length != 4)
+            {
+                cifreCard4.Text = "0000";
+            }
+        }
+
+        private void cifreCard4_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (cifreCard4.Text == "0000")
+            {
+                cifreCard4.Text = "";
+            }
+        }
+
+
+
+
+
+        private void monthTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (monthTextBox.Text == "MONTH")
+                monthTextBox.Text = "";
+        }
+
+        private void monthTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (monthTextBox.Text == "")
+                monthTextBox.Text = "MONTH";
+        }
+        private void yearTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (yearTextBox.Text == "YEAR")
+                yearTextBox.Text = "";
+        }
+
+        private void yearTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (yearTextBox.Text == "")
+                yearTextBox.Text = "YEAR";
+        }
+        private async void btnPayNow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                StripeConfiguration.ApiKey = ((Cleaning)cleaningListBox.SelectedItem).StripeKey;
+
+                var optionstoken = new TokenCreateOptions
+                {
+                   
+                    Card = new TokenCardOptions
+                    {
+                        Number = cifreCard1.Text + cifreCard2.Text + cifreCard3.Text + cifreCard4.Text,
+                        ExpMonth = Int64.Parse(monthTextBox.Text),
+                        ExpYear = Int64.Parse(yearTextBox.Text),
+                        Cvc = cvcTextBox.Password,
+                       
+                    },
+                };
+                var servicetoken = new TokenService();
+                Token stripetoken = servicetoken.Create(optionstoken);
+
+
+                var options = new ChargeCreateOptions
+                {
+                    Amount = (long?)(((Cleaning)cleaningListBox.SelectedItem).Price * 100),
+                    Currency = "ron",
+                    Source = stripetoken.Id,
+                    Description = "...",
+                    
+                };
+                var service = new ChargeService();
+                await service.CreateAsync(options);
+
+
+                
+                PaymentHistory payment = new PaymentHistory()
+                {
+                    CompanyId = ((Cleaning)cleaningListBox.SelectedItem).CompanyId,
+                    PropertyCode = ((Property)propertyDataGrid.SelectedItem).PropertyCode,
+                    CleaningDate = cleaningDate.SelectedDate,
+                    Price = ((Cleaning)cleaningListBox.SelectedItem).Price,
+                    PaymentDate = DateTime.Today
+                };
+                ctx.PaymentHistories.Add(payment);
+                ctx.SaveChanges();
+
+               
+                MessageBox.Show("Payment successful. Check it in the Payment History.");
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
             
+        }
+
+        private void cifreCard1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (cifreCard1.Text.Length == 4)
+                cifreCard2.Focus();
+        }
+
+        private void cifreCard2_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (cifreCard2.Text.Length == 4)
+                cifreCard3.Focus();
+        }
+
+        private void cifreCard3_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (cifreCard3.Text.Length == 4)
+                cifreCard4.Focus();
+        }
+
+        private void monthTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (monthTextBox.Text.Length == 2)
+                yearTextBox.Focus();
         }
     }
 }

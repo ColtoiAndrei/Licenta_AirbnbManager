@@ -156,8 +156,10 @@ namespace AirbnbManager
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            DatabaseEntitiesModel ctx = new DatabaseEntitiesModel();
+            propertyVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("propertyViewSource")));
+            propertyVSource.Source = ctx.Properties.Local;
             ctx.Properties.Load();
-
         }
 
         private void btnBook_Click(object sender, RoutedEventArgs e)
@@ -173,7 +175,6 @@ namespace AirbnbManager
                         {
                             if (checkIn.SelectedDate < checkOut.SelectedDate)
                             {
-                                Customer customerGetId = (Customer)customerDataGrid.SelectedItem;
                                 Property properyGetPrice = ctx.Properties.Find(propertyListBox.SelectedValue.ToString());
                                 //diferenta de zile dintre check-out si check-in
                                 DateTime start = checkIn.SelectedDate.Value;
@@ -182,7 +183,7 @@ namespace AirbnbManager
                                 Booking booking = new Booking()
                                 {
                                     PropertyCode = propertyListBox.SelectedValue.ToString(),
-                                    CustomerId = customerGetId.CustomerId,
+                                    CustomerId = ((Customer)customerDataGrid.SelectedItem).CustomerId,
                                     CheckIn = checkIn.SelectedDate,
                                     CheckOut = checkOut.SelectedDate,
                                     Price = properyGetPrice.Price * Int32.Parse(difference.TotalDays.ToString())
@@ -209,13 +210,10 @@ namespace AirbnbManager
 
         }
 
-
         private void propertyListBox_LostFocus(object sender, RoutedEventArgs e)
         {
-           
+
         }
-
-
     }
 }
 

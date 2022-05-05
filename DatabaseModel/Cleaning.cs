@@ -22,5 +22,8 @@ namespace DatabaseModel
         public string Email { get; set; }
 
         public decimal? Price { get; set; }
+
+        [StringLength(150)]
+        public string StripeKey { get; set; }
     }
 }

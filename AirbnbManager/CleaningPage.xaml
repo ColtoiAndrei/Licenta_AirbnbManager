@@ -20,10 +20,11 @@
                   ColumnWidth="*">
 
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="companyIdColumn" Binding="{Binding CompanyId}" Header="Company Id" />
+                <DataGridTextColumn x:Name="companyIdColumn" Binding="{Binding CompanyId}" Header="Company Id" Width="0.8*" />
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" />
                 <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email"/>
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" />
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="0.5*" />
+                <DataGridTextColumn x:Name="stripeKeyColumn" Binding="{Binding StripeKey}" Header="Stripe Key" Width="1.5*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid x:Name="grid3" HorizontalAlignment="Left"  Margin="83,337,0,0" VerticalAlignment="Top">
@@ -32,6 +33,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -45,6 +47,8 @@
             <TextBox Foreground="White" Background="Firebrick" x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="Price:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
             <TextBox Foreground="White" Background="Firebrick" x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Price, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Foreground="White" Content="Stripe Key:" Grid.Column="0" HorizontalAlignment="Left" Margin="4" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBox Foreground="White" Background="Firebrick" x:Name="stripeKeyTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding StripeKey, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
 
         <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddCleaning" Content="Add Company" HorizontalAlignment="Left" Margin="469,337,0,0" VerticalAlignment="Top" Width="99" Click="btnAddCleaning_Click"/>
