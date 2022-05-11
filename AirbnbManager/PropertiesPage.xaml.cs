@@ -17,6 +17,7 @@ using System.Data.Entity;
 using System.Data;
 using Stripe;
 using Stripe.Infrastructure;
+using System.Net.Mail;
 
 namespace AirbnbManager
 {
@@ -159,8 +160,12 @@ namespace AirbnbManager
                 {
                     if (cleaningDate.SelectedDate.HasValue)
                     {
-                        paymentGrid.Visibility = Visibility.Visible;
-                        priceToPay.Text = String.Format("{0} RON", ((Cleaning)cleaningListBox.SelectedItem).Price);
+                        if (cleaningDate.SelectedDate.Value>=DateTime.Today)
+                        {
+                            paymentGrid.Visibility = Visibility.Visible;
+                            priceToPay.Text = String.Format("{0} RON", ((Cleaning)cleaningListBox.SelectedItem).Price); 
+                        }
+                        else MessageBox.Show("Please select a future date!");
                     }
                     else MessageBox.Show("Please select a Cleaning Date.");
                 }
@@ -272,8 +277,7 @@ namespace AirbnbManager
         }
         private async void btnPayNow_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+           
                 StripeConfiguration.ApiKey = ((Cleaning)cleaningListBox.SelectedItem).StripeKey;
 
                 var optionstoken = new TokenCreateOptions
@@ -297,7 +301,7 @@ namespace AirbnbManager
                     Amount = (long?)(((Cleaning)cleaningListBox.SelectedItem).Price * 100),
                     Currency = "ron",
                     Source = stripetoken.Id,
-                    Description = "...",
+                    Description="...",
                     
                 };
                 var service = new ChargeService();
@@ -316,15 +320,27 @@ namespace AirbnbManager
                 ctx.PaymentHistories.Add(payment);
                 ctx.SaveChanges();
 
+
+                // Email
+                MailMessage mail = new MailMessage();
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("asiisiisia@gmail.com");
+                mail.To.Add("anca_andreescu17@yahoo.com");
+                mail.Subject = "Test message";
+                mail.Body = "Acesta este un test";
+
+                smtp.Port = 587;
+                smtp.Credentials = new System.Net.NetworkCredential("asiisiisia@gmail.com", "isiasiasii");
+                smtp.EnableSsl = true;
+
+                smtp.Send(mail);
+
+
                
                 MessageBox.Show("Payment successful. Check it in the Payment History.");
 
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
+          
             
         }
 
@@ -351,5 +367,7 @@ namespace AirbnbManager
             if (monthTextBox.Text.Length == 2)
                 yearTextBox.Focus();
         }
+
+        
     }
 }

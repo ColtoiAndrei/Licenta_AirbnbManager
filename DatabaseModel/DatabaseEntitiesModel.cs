@@ -17,6 +17,8 @@ namespace DatabaseModel
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<PaymentHistory> PaymentHistories { get; set; }
         public virtual DbSet<Property> Properties { get; set; }
+        public virtual DbSet<PasswordTable> PasswordTable { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

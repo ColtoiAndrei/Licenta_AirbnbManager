@@ -11,16 +11,7 @@
                 <ResourceDictionary Source="/Styles/DataGridStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <!--PRIMARY-->
-            <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#FF3C64D2"/>
-            <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#333333"/>
-            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF325AC8"/>
-            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#FF2850BE"/>
-            <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF"/>
-            <!--ACCENT-->
-            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#689f38"/>
-            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#FFFFFF"/>
+           
         </ResourceDictionary>
 
     </Application.Resources>

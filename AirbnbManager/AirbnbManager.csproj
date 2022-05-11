@@ -227,6 +227,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>Database.mdf</DependentUpon>
     </Content>
+    <Resource Include="icons\exit.png" />
+    <Resource Include="icons\loginPass.png" />
     <Resource Include="icons\cardchip5.png" />
     <Resource Include="icons\icon4.png" />
     <Resource Include="icons\icon3.png" />

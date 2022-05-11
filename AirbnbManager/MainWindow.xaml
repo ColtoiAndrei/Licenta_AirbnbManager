@@ -4,28 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AirbnbManager"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         
         mc:Ignorable="d"
         Title="AirbnbManager" Height="600" Width="920" WindowStartupLocation="CenterScreen"
-        Background="Transparent" WindowStyle="ToolWindow">
-    
+        Background="Transparent" WindowStyle="None">
+   
     <Border CornerRadius="20"
             Background="#2E3349">
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-            
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="75"/>
-            <RowDefinition/>
-            
-         </Grid.RowDefinitions>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+
+            </Grid.RowDefinitions>
 
             <DockPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Background="#181E36" />
             <Image Grid.Row="0" Grid.Column="0" 
+                   Width="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   Source="/icons/exit.png" MouseDown="Image_MouseDown_1" />
+            <Image Grid.Row="0" Grid.Column="0"                    
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="10,10,10,10"
@@ -70,22 +77,115 @@
                                Foreground="#FFFF"
                                 FontWeight="Medium"
                                Style="{StaticResource MenuButtonStyle}" Checked="btnPaymentHistory_Checked" />
+
+                <Grid Margin="0,40,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition  />
+                        
+
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="changePasswordGrid" Margin="3,0,3,10" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.4*"/>
+                            <ColumnDefinition/>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition/>
+                            <RowDefinition/>
+
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Current Password" Foreground="#FFFF" Margin="10,10,10,10" Grid.Column="0" Grid.Row="0"/>
+                        <PasswordBox x:Name="currentPassword" Margin="10,10,10,10"  Grid.Column="1"  Grid.Row="0" />
+                        <TextBlock Text="New Password" Foreground="#FFFF" Margin="10,10,10,10"  Grid.Column="0" Grid.Row="1" />
+                        <PasswordBox x:Name="newPassword" Margin="10,10,10,10"   Grid.Column="1" Grid.Row="1"/>
+                        <Button x:Name="btnSavePassword" Width="110" Content="Save" Margin="10,10,10,0" Grid.ColumnSpan="2" Grid.Row="2" Click="btnSavePassword_Click" />
+
+                    </Grid>
+                    <StackPanel Orientation="Vertical" Grid.Row="1">
+                        <Button x:Name="btnChangePassword" Width="110" Content="Change Password" Margin="10,10,10,5" Click="btnChangePassword_Click" />
+                        <Button x:Name="btnLogOut" Width="110" Content="Log Out" Click="btnLogOut_Click"  Margin="10,5,10,0"/>
+                    </StackPanel>
+                </Grid>
+
             </StackPanel>
-            
-                
 
 
-           
-        
+
+
+
+
             <Grid Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2">
-                <local:PropertiesPage x:Name="properties"> </local:PropertiesPage>
-                <local:CustomersPage x:Name="customers" Visibility="Collapsed"> </local:CustomersPage>
-                <local:CleaningPage x:Name="cleaning" Visibility="Collapsed"> </local:CleaningPage>
-                <local:BookingsPage x:Name="bookings" Visibility="Collapsed"> </local:BookingsPage>
-                <local:PaymentHistoryPage x:Name="paymentHistory" Visibility="Collapsed"> </local:PaymentHistoryPage>
+                <local:PropertiesPage x:Name="properties"></local:PropertiesPage>
+                <local:CustomersPage x:Name="customers" Visibility="Collapsed"></local:CustomersPage>
+                <local:CleaningPage x:Name="cleaning" Visibility="Collapsed"></local:CleaningPage>
+                <local:BookingsPage x:Name="bookings" Visibility="Collapsed"></local:BookingsPage>
+                <local:PaymentHistoryPage x:Name="paymentHistory" Visibility="Collapsed"></local:PaymentHistoryPage>
             </Grid>
 
+       
+            <Grid x:Name="loginGrid" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF140054" Offset="0.05"/>
+                        <GradientStop Color="#FF6B0356" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.6*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2.5*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Grid.Column="0" 
+                   Width="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   Source="/icons/exit.png" MouseDown="Image_MouseDown_1" />
+                <StackPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1">
+                    <StackPanel.Background>
+                        <SolidColorBrush Color="AliceBlue" Opacity="0.02"/>
+                    </StackPanel.Background>
+                    <TextBlock Text="AirBnB Manager"
+                           FontWeight="Light"
+                           FontFamily="helvetica"
+                           FontSize="23"
+                           Foreground="White"
+                           Margin="0,40,0,20"
+                           HorizontalAlignment="Center"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,30">
+                        <PasswordBox x:Name="loginTextBox" FontFamily="Helvetica"
+                             FontWeight="Light"
+                             Password="Password"
+                             FontSize="20"
+                             HorizontalAlignment="Center"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Width="100"
+                             HorizontalContentAlignment="Left"
+                             Opacity="0.5"
+                             Height="25"
+                             Margin="23,10,30,10" GotFocus="loginTextBox_GotFocus" KeyDown="loginTextBox_KeyDown" />
+                        <Image Height="40"  Source="icons/loginPass.png" MouseDown="Image_MouseDown"/>
+                        
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+            
         </Grid>
+
     </Border>
 </Window>
