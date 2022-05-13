@@ -6,17 +6,23 @@
              xmlns:local="clr-namespace:AirbnbManager"
              xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.BookingsPage"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#2E3349" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <CollectionViewSource x:Key="bookingViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Booking}, CreateList=True}"/>
     </UserControl.Resources>
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF0E0235" Offset="0.05"/>
+            <GradientStop Color="#FF26001E" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
     <Grid DataContext="{StaticResource bookingViewSource}">
         <DataGrid x:Name="bookingDataGrid" 
                   Style="{StaticResource DataGridStyle}"
                   ItemsSource="{Binding}" 
                   ColumnHeaderStyle="{StaticResource ColumnHeaderStyle}"
                   CellStyle="{StaticResource CellStyle}"
-                  ColumnWidth="*"
+                  ColumnWidth="*" Margin="10,10,10,77.6"
                   
                   >
             <DataGrid.Columns>
@@ -39,6 +45,6 @@
                 <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnDeleteBooking" Style="{StaticResource ButtonStyle}" Content="Delete Booking" HorizontalAlignment="Left" Margin="338,260,0,0" VerticalAlignment="Top" Width="75" Click="btnDeleteBooking_Click"/>
+        <Button x:Name="btnDeleteBooking" Style="{StaticResource ButtonStyle}" Content="Delete Booking" HorizontalAlignment="Left" Margin="327,405,0,0" VerticalAlignment="Top" Width="130" Click="btnDeleteBooking_Click"/>
     </Grid>
 </UserControl>

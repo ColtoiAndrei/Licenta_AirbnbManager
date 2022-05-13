@@ -6,12 +6,18 @@
              xmlns:local="clr-namespace:AirbnbManager"
              xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.CustomersPage"
              mc:Ignorable="d" 
-              d:DesignHeight="600" d:DesignWidth="720"  Background="#2E3349" Loaded="UserControl_Loaded"  IsVisibleChanged="UserControl_IsVisibleChanged" >
+              d:DesignHeight="600" d:DesignWidth="720" Loaded="UserControl_Loaded"  IsVisibleChanged="UserControl_IsVisibleChanged" >
     <UserControl.Resources>
         <CollectionViewSource x:Key="customerViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Customer}, CreateList=True}"/>
         <CollectionViewSource x:Key="propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Property}, CreateList=True}"/>
         <CollectionViewSource x:Key="bookingViewSource"  d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Booking}, CreateList=True}"/>
     </UserControl.Resources>
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF0E0235" Offset="0.05"/>
+            <GradientStop Color="#FF26001E" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background> 
     <Grid DataContext="{StaticResource customerViewSource}">
 
         <DataGrid x:Name="customerDataGrid" 
@@ -41,22 +47,26 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Foreground="White" Content="Age:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="ageTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Age, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="ageTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Age, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="CNP:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="cNPTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding CNP, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="cNPTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding CNP, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="Customer Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="customerIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding CustomerId, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="customerIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding CustomerId, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="First Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="firstNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding FirstName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="firstNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding FirstName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="Last Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="lastNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LastName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="lastNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LastName, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Margin="132,416,0,0" VerticalAlignment="Top" Width="99" Click="btnAddCustomer_Click"/>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditCustomer" Content="Edit Customer" HorizontalAlignment="Left" Margin="132,456,0,0" VerticalAlignment="Top" Width="99" Click="btnEditCustomer_Click"/>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteCustomer" Content="Delete Customer" HorizontalAlignment="Left" Margin="132,496,0,0" VerticalAlignment="Top" Width="99" Click="btnDeleteCustomer_Click"/>
-        <ListBox x:Name="propertyListBox" DisplayMemberPath="PropertyCode" ItemsSource="{Binding Source={StaticResource propertyViewSource}}" Margin="338,301,266,92" SelectedValuePath="PropertyCode" LostFocus="propertyListBox_LostFocus"
-                 Background="#222035" 
-                 Foreground="White"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddCustomer" Content="Add Customer" HorizontalAlignment="Left" Margin="83,416,0,0" VerticalAlignment="Top" Width="130" Click="btnAddCustomer_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditCustomer" Content="Edit Customer" HorizontalAlignment="Left" Margin="83,466,0,0" VerticalAlignment="Top" Width="130" Click="btnEditCustomer_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteCustomer" Content="Delete Customer" HorizontalAlignment="Left" Margin="83,515,0,0" VerticalAlignment="Top" Width="130" Click="btnDeleteCustomer_Click"/>
+        <ListBox x:Name="propertyListBox" DisplayMemberPath="PropertyCode" ItemsSource="{Binding Source={StaticResource propertyViewSource}}" Margin="338,301,266,167" SelectedValuePath="PropertyCode" LostFocus="propertyListBox_LostFocus"
+                 BorderThickness="0.4"
+                 Foreground="White">
+            <ListBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.03"/>
+            </ListBox.Background>
+        </ListBox>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Height="46" Margin="383,250,0,0" VerticalAlignment="Top" Width="268">
             <Label Foreground="White" Content="Book Now" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" FontFamily="Tempus Sans ITC" FontSize="24"/>
             <Image Source="/icons/icon2.png" />
@@ -90,7 +100,7 @@
                 </Style>
             </DatePicker.Resources>
         </DatePicker>
-        <Button Style="{StaticResource ButtonStyle}" FontSize="24" x:Name="btnBook" Content="Save" HorizontalAlignment="Left" Margin="489,466,0,0" VerticalAlignment="Top" Width="102" Click="btnBook_Click" FontFamily="Castellar"/>
+        <Button Style="{StaticResource ButtonStyle}" FontSize="20" x:Name="btnBook" Content="Save" HorizontalAlignment="Left" Margin="405,465,0,0" VerticalAlignment="Top" Width="130" Click="btnBook_Click" FontFamily="Castellar"/>
 
 
 

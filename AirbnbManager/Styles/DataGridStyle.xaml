@@ -6,13 +6,33 @@
         <Setter Property="EnableRowVirtualization" Value="False"/>
         <Setter Property="Margin" Value="10,10,10,356.6"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
-        <Setter Property="Background" Value="#222035"/>
-        <Setter Property="BorderBrush" Value="#222035"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="#222035"/>
-        <Setter Property="VerticalGridLinesBrush" Value="#222035"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalGridLinesBrush" >
+            <Setter.Value>
+                <SolidColorBrush Color="#FFFFFFFF" Opacity="0.04"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalGridLinesBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="#FFFFFFFF" Opacity="0.04"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
-        <Setter Property="RowBackground" Value="#222035"/>
+        <Setter Property="RowBackground" >
+            <Setter.Value>
+                <SolidColorBrush Color="#FFFFFFFF" Opacity="0.03"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="EnableRowVirtualization" Value="False"/>
@@ -24,19 +44,31 @@
     <Style TargetType="DataGridCell" x:Key="CellStyle">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="Green"/>
+                <Setter Property="Background" >
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" Opacity="0.08"/>
+                    </Setter.Value>
+                </Setter>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderBrush" Value="Green"/>
+                <Setter Property="BorderBrush" >
+                    <Setter.Value>
+                        <SolidColorBrush Color="White" Opacity="0.08"/>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
         </Style.Triggers>
+        
     </Style>
 
     <Style TargetType="DataGridColumnHeader" x:Key="ColumnHeaderStyle">
 
-        <Setter Property="Background" Value="#222035" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="#FFFFFFFF" Opacity="0.03"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Height" Value="35" />
-        <Setter Property="BorderBrush" Value="#222035" />
-        <Setter Property="SeparatorBrush" Value="#222035" />
+        
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="IsManipulationEnabled" Value="False"/>
     </Style>

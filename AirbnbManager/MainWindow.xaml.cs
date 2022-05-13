@@ -109,6 +109,8 @@ namespace AirbnbManager
             else changePasswordGrid.Visibility = Visibility.Hidden;
             currentPassword.Password = "";
             newPassword.Password = "";
+            confirmPassword.Password = "";
+
         }
 
         private void Image_MouseDown_1(object sender, MouseButtonEventArgs e)
@@ -118,13 +120,14 @@ namespace AirbnbManager
 
         private void btnSavePassword_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPassword.Password == ctx.PasswordTable.Find(1).Password)
+            if (currentPassword.Password == ctx.PasswordTable.Find(1).Password && confirmPassword.Password == newPassword.Password)
             {
                 ctx.PasswordTable.Find(1).Password = newPassword.Password;
                 ctx.SaveChanges();
                 MessageBox.Show("  The new password was saved.  ");
                 currentPassword.Password = "";
                 newPassword.Password = "";
+                confirmPassword.Password = "";
             }
             else MessageBox.Show("    Incorrect Password    ");
         }
@@ -147,5 +150,7 @@ namespace AirbnbManager
             }
 
         }
+
+      
     }
 }

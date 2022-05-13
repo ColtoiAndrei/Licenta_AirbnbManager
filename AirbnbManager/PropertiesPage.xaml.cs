@@ -325,20 +325,21 @@ namespace AirbnbManager
                 MailMessage mail = new MailMessage();
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com");
 
-                mail.From = new MailAddress("asiisiisia@gmail.com");
-                mail.To.Add("anca_andreescu17@yahoo.com");
-                mail.Subject = "Test message";
-                mail.Body = "Acesta este un test";
+                mail.From = new MailAddress("TestLicenta111@gmail.com");
+                mail.To.Add(((Cleaning)cleaningListBox.SelectedItem).Email);
+                mail.Subject = "Payment successful";
+                mail.Body = "A Cleaning Service was successfully paid." + Environment.NewLine + "Property Address: " + ((Property)propertyDataGrid.SelectedItem).Address + "."
+                + Environment.NewLine + "Cleaning Date: " + cleaningDate.SelectedDate + "." + Environment.NewLine + "Price: " + ((Cleaning)cleaningListBox.SelectedItem).Price + ".";
 
                 smtp.Port = 587;
-                smtp.Credentials = new System.Net.NetworkCredential("asiisiisia@gmail.com", "isiasiasii");
+                smtp.Credentials = new System.Net.NetworkCredential("TestLicenta111@gmail.com", "testlicenta111");
                 smtp.EnableSsl = true;
 
                 smtp.Send(mail);
 
 
                
-                MessageBox.Show("Payment successful. Check it in the Payment History.");
+                MessageBox.Show("Payment successful. Check it in the Payment History. An email with all the details was sent to "+ ((Cleaning)cleaningListBox.SelectedItem).Email+".");
 
           
             

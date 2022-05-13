@@ -7,12 +7,18 @@
              xmlns:DatabaseModel="clr-namespace:DatabaseModel;assembly=DatabaseModel" x:Class="AirbnbManager.PropertiesPage"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="600" d:DesignWidth="720" Background="#2E3349" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged" >
+             d:DesignHeight="600" d:DesignWidth="720" Loaded="UserControl_Loaded" IsVisibleChanged="UserControl_IsVisibleChanged" >
     <UserControl.Resources>
         <CollectionViewSource x:Key="propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Property}, CreateList=True}"/>
         <CollectionViewSource x:Key="cleaningViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:Cleaning}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentHistoryViewSource" d:DesignSource="{d:DesignInstance {x:Type DatabaseModel:PaymentHistory}, CreateList=True}"/>
     </UserControl.Resources>
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF0E0235" Offset="0.05"/>
+            <GradientStop Color="#FF26001E" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
     <Grid DataContext="{StaticResource propertyViewSource}">
 
         <DataGrid x:Name="propertyDataGrid"
@@ -43,24 +49,28 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Foreground="White" Content="Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="addressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Address, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="addressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Address, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="Price:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick"  x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Price, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}"  x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Price, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label  Foreground="White" Content="Property Code:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontFamily="Times New Roman"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="propertyCodeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding PropertyCode, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="propertyCodeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding PropertyCode, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
             <Label Foreground="White" Content="Rooms:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBox Foreground="White" Background="Firebrick" x:Name="roomsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Rooms, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox Foreground="White" Style="{StaticResource TextBoxStyle}" x:Name="roomsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Rooms, Mode=OneWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddProperty" Content="Add Property" HorizontalAlignment="Left" Margin="166,382,0,0" VerticalAlignment="Top" Width="99" Click="btnAddProperty_Click"/>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditProperty" Content="Edit Property" HorizontalAlignment="Left" Margin="166,422,0,0" VerticalAlignment="Top" Width="99" Click="btnEditProperty_Click"/>
-        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteProperty" Content="Delete Property" HorizontalAlignment="Left" Margin="166,462,0,0" VerticalAlignment="Top" Width="99" Click="btnDeleteProperty_Click"/>
-        <ListBox x:Name="cleaningListBox" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource cleaningViewSource}}" Margin="384,314,229,103" SelectedValuePath="CompanyId"
-                 Background="#222035" 
-                 Foreground="White"/>
-        <Label Foreground="White" Content="Cleaning Date" HorizontalAlignment="Left" Margin="523,319,0,0" VerticalAlignment="Top" Width="83"/>
-        <DatePicker x:Name="cleaningDate" HorizontalAlignment="Left" Margin="523,350,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"
-                    BorderBrush="Transparent"
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnAddProperty" Content="Add Property" HorizontalAlignment="Left" Margin="88,382,0,0" VerticalAlignment="Top" Width="130" Click="btnAddProperty_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnEditProperty" Content="Edit Property" HorizontalAlignment="Left" Margin="88,435,0,0" VerticalAlignment="Top" Width="130" Click="btnEditProperty_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" x:Name="btnDeleteProperty" Content="Delete Property" HorizontalAlignment="Left" Margin="88,489,0,0" VerticalAlignment="Top" Width="130" Click="btnDeleteProperty_Click"/>
+        <ListBox x:Name="cleaningListBox" BorderThickness="0.4" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource cleaningViewSource}}" Margin="384,335,229,189" SelectedValuePath="CompanyId" Foreground="White">
+            <ListBox.Background>
+                <SolidColorBrush Color="White" Opacity="0.03"/>
+            </ListBox.Background>
+        </ListBox>
+
+        <Label Foreground="White" Content="Cleaning Date" HorizontalAlignment="Left" Margin="523,335,0,0" VerticalAlignment="Top" Width="97"/>
+        <DatePicker x:Name="cleaningDate" HorizontalAlignment="Left" Margin="523,366,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday"
+                    
                     Foreground="White"
+                    Background="Transparent"
                     >
             <DatePicker.Resources>
                 <Style TargetType="{x:Type DatePickerTextBox}" >
@@ -75,29 +85,36 @@
             <Label Foreground="White" Content="Cleaning Services" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" FontFamily="Tempus Sans ITC" FontSize="24"/>
             <Image Source="/icons/icon3.png" Margin="0,0,0,4.4" />
         </StackPanel>
-        <Button Content="Pay for services" HorizontalAlignment="Left" Margin="546,497,0,0" VerticalAlignment="Top" Width="90" Click="btnPayServices_Click"/>
+        <Button Style="{StaticResource ButtonStyle}" Content="Pay for services" HorizontalAlignment="Left" Margin="437,447,0,0" VerticalAlignment="Top" Width="130" Click="btnPayServices_Click"/>
 
 
-       
-        <Grid x:Name="paymentGrid" Background="Bisque">
+
+        <Grid x:Name="paymentGrid">
             <Grid.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                     </ResourceDictionary.MergedDictionaries>
-                    <!--PRIMARY-->
+                    
                     <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#FF3C64D2"/>
                     <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="#333333"/>
                     <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#FF325AC8"/>
                     <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="#FFFFFF"/>
                     <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#FF2850BE"/>
                     <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF"/>
-                    <!--ACCENT-->
+                    
                     <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#689f38"/>
                     <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="#FFFFFF"/>
                 </ResourceDictionary>
             </Grid.Resources>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF000D62" Offset="0"/>
+                    <GradientStop Color="#FF380059" Offset="1"/>
+                    <GradientStop Color="#FF003763" Offset="0.245"/>
+                </LinearGradientBrush>
+            </Grid.Background>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="180"/>
@@ -107,9 +124,8 @@
             <Border>
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF15206A" Offset="0"/>
-                        <GradientStop Color="#FF196176" Offset="1"/>
-                        <GradientStop Color="#FF202F8D" Offset="0.245"/>
+                        <GradientStop Color="#FF0E0235" Offset="0.05"/>
+                        <GradientStop Color="#FF26001E" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
@@ -126,8 +142,8 @@
                 </Grid>
             </Border>
             <StackPanel Grid.Column="1" Margin="20" >
-                <TextBlock Text="Payment" FontSize="45" HorizontalAlignment="Left"/>
-                <TextBlock Text="Fill in credit card to begin" FontSize="20" Margin="0 10"/>
+                <TextBlock Text="Payment" Foreground="White" FontSize="45" HorizontalAlignment="Left"/>
+                <TextBlock Foreground="White" Text="Fill in credit card to begin" FontSize="20" Margin="0 10"/>
                 <Border Margin="0,30,0,0" Width="480" Height="270" CornerRadius="5">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -173,10 +189,10 @@
                     </Grid>
                 </Border>
                 <Button x:Name="btnPayNow" Margin="50,50,50,20" Content="Pay Now" Click="btnPayNow_Click"/>
-                <TextBlock Text="Test Card:  4242 4242 4242 4242" FontSize="11" Foreground="#4e0082" FontFamily="Microsoft JhengHei UI"/>
+                <TextBlock Text="Test Card:  4242 4242 4242 4242" FontSize="11" Foreground="White" FontFamily="Microsoft JhengHei UI"/>
             </StackPanel>
         </Grid>
-        
+
 
 
 
