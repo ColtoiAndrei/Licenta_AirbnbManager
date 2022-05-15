@@ -66,64 +66,73 @@ namespace AirbnbManager
 
         private void btnAddProperty_Click(object sender, RoutedEventArgs e)
         {
-            try
-            { 
-                Property property = null;
-                var idExists = ctx.Properties.Find(propertyCodeTextBox.Text.Trim());
-                if (idExists != null) MessageBox.Show("PropertyCode already exists!");
-                else
+            if (Double.Parse(priceTextBox.Text.Trim()) < 999.99)
+            {
+                try
                 {
-                    property = new Property()
+                    Property property = null;
+                    var idExists = ctx.Properties.Find(propertyCodeTextBox.Text.Trim());
+                    if (idExists != null) MessageBox.Show("PropertyCode already exists!");
+                    else
                     {
-                        PropertyCode = propertyCodeTextBox.Text.Trim(),
-                        Address = addressTextBox.Text.Trim(),
-                        Rooms = Int32.Parse(roomsTextBox.Text.Trim()),
-                        Price = Decimal.Parse(priceTextBox.Text.Trim())
-                    };
+                        property = new Property()
+                        {
+                            PropertyCode = propertyCodeTextBox.Text.Trim(),
+                            Address = addressTextBox.Text.Trim(),
+                            Rooms = Int32.Parse(roomsTextBox.Text.Trim()),
+                            Price = Decimal.Parse(priceTextBox.Text.Trim())
+                        };
 
-                    ctx.Properties.Add(property);
-                    ctx.SaveChanges();
-                    propertyVSource.View.Refresh();
+                        ctx.Properties.Add(property);
+                        ctx.SaveChanges();
+                        propertyVSource.View.Refresh();
 
+                    }
+                }
+
+                catch (Exception)
+                {
+                    MessageBox.Show("Empty fields detected or wrong values!");
                 }
             }
-           
-            catch (Exception)
-            {
-                MessageBox.Show("Empty fields detected or wrong values!");
-            }
+            else MessageBox.Show("Maximum price can be 999.99");
 
         }
 
         private void btnEditProperty_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Double.Parse(priceTextBox.Text.Trim()) < 999.99)
             {
-                Property property = null;
-                if (propertyDataGrid.SelectedItem != null)
+                try
                 {
-                    string idChange = propertyCodeTextBox.Text.Trim();
-                    property = (Property)propertyDataGrid.SelectedItem;
-                    if (property.PropertyCode == idChange)
+                    Property property = null;
+                    if (propertyDataGrid.SelectedItem != null)
                     {
-                        property.Address = addressTextBox.Text.Trim();
-                        property.Rooms = Int32.Parse(roomsTextBox.Text.Trim());
-                        property.Price = Decimal.Parse(priceTextBox.Text.Trim());
+                        string idChange = propertyCodeTextBox.Text.Trim();
+                        property = (Property)propertyDataGrid.SelectedItem;
+                        if (property.PropertyCode == idChange)
+                        {
+                            property.Address = addressTextBox.Text.Trim();
+                            property.Rooms = Int32.Parse(roomsTextBox.Text.Trim());
+                            property.Price = Decimal.Parse(priceTextBox.Text.Trim());
 
-                        ctx.SaveChanges();
-                        propertyVSource.View.Refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("You cannot change the PropertyCode!");
-                        propertyCodeTextBox.Text = property.PropertyCode.Trim();
+                            ctx.SaveChanges();
+                            propertyVSource.View.Refresh();
+                        }
+                        else
+                        {
+                            MessageBox.Show("You cannot change the PropertyCode!");
+                            propertyCodeTextBox.Text = property.PropertyCode.Trim();
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please select the row you want to edit!");
+                } 
             }
-            catch (Exception)
-            {
-                  MessageBox.Show("Please select the row you want to edit!");
-            }
+            else MessageBox.Show("Maximum price can be 999.99");
+
         }
 
         private void btnDeleteProperty_Click(object sender, RoutedEventArgs e)
@@ -329,7 +338,7 @@ namespace AirbnbManager
                 mail.To.Add(((Cleaning)cleaningListBox.SelectedItem).Email);
                 mail.Subject = "Payment successful";
                 mail.Body = "A Cleaning Service was successfully paid." + Environment.NewLine + "Property Address: " + ((Property)propertyDataGrid.SelectedItem).Address + "."
-                + Environment.NewLine + "Cleaning Date: " + cleaningDate.SelectedDate + "." + Environment.NewLine + "Price: " + ((Cleaning)cleaningListBox.SelectedItem).Price + ".";
+                + Environment.NewLine + "Cleaning Date: " + cleaningDate.SelectedDate + "." + Environment.NewLine + "Price: " + ((Cleaning)cleaningListBox.SelectedItem).Price;
 
                 smtp.Port = 587;
                 smtp.Credentials = new System.Net.NetworkCredential("TestLicenta111@gmail.com", "testlicenta111");

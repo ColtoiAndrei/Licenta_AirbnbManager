@@ -65,72 +65,81 @@ namespace AirbnbManager
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
 
-            try
+            if (cNPTextBox.Text.Length <= 13)
             {
-                Customer customer = null;
-                var idExists = ctx.Customers.Find(Int32.Parse(customerIdTextBox.Text.Trim()));
-                if (idExists != null) MessageBox.Show("Customer Id already exists!");
-                else
+                try
+                {
+                    Customer customer = null;
+                    var idExists = ctx.Customers.Find(Int32.Parse(customerIdTextBox.Text.Trim()));
+                    if (idExists != null) MessageBox.Show("Customer Id already exists!");
+                    else
+                    {
+
+
+                        customer = new Customer()
+                        {
+
+                            CustomerId = Int32.Parse(customerIdTextBox.Text.Trim()),
+                            FirstName = firstNameTextBox.Text.Trim(),
+                            LastName = lastNameTextBox.Text.Trim(),
+                            Age = Int32.Parse(ageTextBox.Text.Trim()),
+                            CNP = UInt64.Parse(cNPTextBox.Text.Trim())
+                        };
+
+                        ctx.Customers.Add(customer);
+                        ctx.SaveChanges();
+                        customerVSource.View.Refresh();
+
+
+                    }
+                }
+                catch (Exception)
                 {
 
-
-                    customer = new Customer()
-                    {
-                        
-                        CustomerId = Int32.Parse(customerIdTextBox.Text.Trim()),
-                        FirstName = firstNameTextBox.Text.Trim(),
-                        LastName = lastNameTextBox.Text.Trim(),
-                        Age = Int32.Parse(ageTextBox.Text.Trim()),
-                        CNP = UInt64.Parse(cNPTextBox.Text.Trim())
-                    };
-
-                    ctx.Customers.Add(customer);
-                    ctx.SaveChanges();
-                    customerVSource.View.Refresh();
-
-
-                }
+                    MessageBox.Show("Empty fields detected or wrong values!");
+                } 
             }
-            catch (Exception)
-            {
+            else MessageBox.Show("The maximum lenght of CNP must be 13.");
 
-                MessageBox.Show("Empty fields detected or wrong values!");
-            }
-            
-         
+
         }
         private void btnEditCustomer_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (cNPTextBox.Text.Length <= 13)
             {
-                Customer customer = null;
-                if(customerDataGrid.SelectedItem != null)
+                try
                 {
-                    int idChange = Int32.Parse(customerIdTextBox.Text.Trim());
-                    customer = (Customer)customerDataGrid.SelectedItem;
-                    if(customer.CustomerId == idChange)
-                    {  
-                        customer.FirstName = firstNameTextBox.Text.Trim();
-                        customer.LastName = lastNameTextBox.Text.Trim();
-                        customer.Age = Int32.Parse(ageTextBox.Text.Trim());
-                        customer.CNP = UInt64.Parse(cNPTextBox.Text.Trim());
-
-                        ctx.SaveChanges();
-                        customerVSource.View.Refresh();
-                    }
-                    else
+                    Customer customer = null;
+                    if (customerDataGrid.SelectedItem != null)
                     {
-                        MessageBox.Show("You cannot change the Customer Id!");
-                        customerIdTextBox.Text = customer.CustomerId.ToString();
+                        int idChange = Int32.Parse(customerIdTextBox.Text.Trim());
+                        customer = (Customer)customerDataGrid.SelectedItem;
+                        if (customer.CustomerId == idChange)
+                        {
+                            customer.FirstName = firstNameTextBox.Text.Trim();
+                            customer.LastName = lastNameTextBox.Text.Trim();
+                            customer.Age = Int32.Parse(ageTextBox.Text.Trim());
+                            customer.CNP = UInt64.Parse(cNPTextBox.Text.Trim());
+
+                            ctx.SaveChanges();
+                            customerVSource.View.Refresh();
+                        }
+                        else
+                        {
+                            MessageBox.Show("You cannot change the Customer Id!");
+                            customerIdTextBox.Text = customer.CustomerId.ToString();
+                        }
                     }
+
                 }
+                catch (Exception)
+                {
 
+                    MessageBox.Show("Please select the row you want to edit!");
+                } 
             }
-            catch (Exception)
-            {
+            else MessageBox.Show("The maximum lenght of CNP must be 13.");
 
-                MessageBox.Show("Please select the row you want to edit!");
-            }
         }
 
         private void btnDeleteCustomer_Click(object sender, RoutedEventArgs e)

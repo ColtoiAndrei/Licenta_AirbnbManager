@@ -50,66 +50,76 @@ namespace AirbnbManager
 
         private void btnAddCleaning_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Double.Parse(priceTextBox.Text.Trim()) < 999.99)
             {
-                Cleaning cleaning = null;
-                var idExists = ctx.Cleanings.Find(Int32.Parse(companyIdTextBox.Text.Trim()));
-                if (idExists != null) MessageBox.Show("Company Id Id already exists!");
-                else
+                try
                 {
-                    cleaning = new Cleaning()
+                    Cleaning cleaning = null;
+                    var idExists = ctx.Cleanings.Find(Int32.Parse(companyIdTextBox.Text.Trim()));
+                    if (idExists != null) MessageBox.Show("Company Id Id already exists!");
+                    else
                     {
-                        CompanyId = Int32.Parse(companyIdTextBox.Text.Trim()),
-                        Name = nameTextBox.Text.Trim(),
-                        Email = emailTextBox.Text.Trim(),
-                        Price = Decimal.Parse(priceTextBox.Text.Trim()),
-                        StripeKey = stripeKeyTextBox.Text.Trim()
-                    };
+                        cleaning = new Cleaning()
+                        {
+                            CompanyId = Int32.Parse(companyIdTextBox.Text.Trim()),
+                            Name = nameTextBox.Text.Trim(),
+                            Email = emailTextBox.Text.Trim(),
+                            Price = Decimal.Parse(priceTextBox.Text.Trim()),
+                            StripeKey = stripeKeyTextBox.Text.Trim()
+                        };
 
-                    ctx.Cleanings.Add(cleaning);
-                    ctx.SaveChanges();
-                    cleaningVSource.View.Refresh();
+                        ctx.Cleanings.Add(cleaning);
+                        ctx.SaveChanges();
+                        cleaningVSource.View.Refresh();
 
+                    }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception)
+                {
 
-                MessageBox.Show("Empty fields detected or wrong values!");
+                    MessageBox.Show("Empty fields detected or wrong values!");
+                } 
             }
+            else MessageBox.Show("Maximum price can be 999.99");
+
         }
 
         private void btnEditCleaning_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Double.Parse(priceTextBox.Text.Trim()) < 999.99)
             {
-                Cleaning cleaning = null;
-                if (cleaningDataGrid.SelectedItem != null)
+                try
                 {
-                    int idChange = Int32.Parse(companyIdTextBox.Text.Trim());
-                    cleaning = (Cleaning)cleaningDataGrid.SelectedItem;
-                    if (cleaning.CompanyId == idChange)
+                    Cleaning cleaning = null;
+                    if (cleaningDataGrid.SelectedItem != null)
                     {
-                        cleaning.Name = nameTextBox.Text.Trim();
-                        cleaning.Email = emailTextBox.Text.Trim();
-                        cleaning.Price = Decimal.Parse(priceTextBox.Text.Trim());
-                        cleaning.StripeKey = stripeKeyTextBox.Text.Trim();
+                        int idChange = Int32.Parse(companyIdTextBox.Text.Trim());
+                        cleaning = (Cleaning)cleaningDataGrid.SelectedItem;
+                        if (cleaning.CompanyId == idChange)
+                        {
+                            cleaning.Name = nameTextBox.Text.Trim();
+                            cleaning.Email = emailTextBox.Text.Trim();
+                            cleaning.Price = Decimal.Parse(priceTextBox.Text.Trim());
+                            cleaning.StripeKey = stripeKeyTextBox.Text.Trim();
 
-                        ctx.SaveChanges();
-                        cleaningVSource.View.Refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("You cannot change the Company Id!");
-                        companyIdTextBox.Text = cleaning.CompanyId.ToString();
+                            ctx.SaveChanges();
+                            cleaningVSource.View.Refresh();
+                        }
+                        else
+                        {
+                            MessageBox.Show("You cannot change the Company Id!");
+                            companyIdTextBox.Text = cleaning.CompanyId.ToString();
+                        }
                     }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception)
+                {
 
-                MessageBox.Show("Please select the row you want to edit!");
+                    MessageBox.Show("Please select the row you want to edit!");
+                } 
             }
+            else MessageBox.Show("Maximum price can be 999.99");
+
         }
 
         private void btnDeleteCleaning_Click(object sender, RoutedEventArgs e)
